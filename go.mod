@@ -1,4 +1,4 @@
-module github.com/ListKelvin/book-store.git
+module github.com/ListKelvin/book-store
 
 go 1.21.5
 
