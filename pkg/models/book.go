@@ -25,8 +25,9 @@ func init() {
 	db.AutoMigrate(&Book{})
 }
 
-func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
-    result := db.Create(&b)
+func (b *Book) CreateBook() (*Book, error) {
+    
+	result := db.Create(&b)
     if result.Error != nil {
         return nil, result.Error // Return error if creation failed
     }
@@ -47,7 +48,7 @@ func GetBookById(Id int64) (*Book, *gorm.DB) {
 }
 
 
-func DeleteBookById(ID int64) Book {
+func DeleteBook(ID int64) Book {
 	var book Book
 
 	 db.Where("ID=?", ID).Delete(book)
