@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/ListKelvin/book-store/pkg/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -18,6 +19,9 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
+	db.AutoMigrate(&models.Book{})
+	db.AutoMigrate(&models.User{})
+
 	db = d
 }
 

@@ -43,7 +43,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request){
 	b,_:= CreateBook.CreateBook()
 	res, _ :=json.Marshal(b)
 	w.Header().Set("Content-Type", "pkglication/json")
-	w.WriteHeader(http.StatusAccepted)
+	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 
 }

@@ -2,8 +2,6 @@ package models
 
 import (
 	"gorm.io/gorm"
-
-	"github.com/ListKelvin/book-store/pkg/config"
 )
 
 
@@ -16,14 +14,11 @@ type Book struct {
 	Publication string `json:"publication"`
 
 }
-
-
-
-func init() {
-	config.Connect()
-	db = config.GetDB()
-	db.AutoMigrate(&Book{})
-}
+// func init() {
+// 	config.Connect()
+// 	db = config.GetDB()
+// 	db.AutoMigrate(&Book{})
+// }
 
 func (b *Book) CreateBook() (*Book, error) {
     
