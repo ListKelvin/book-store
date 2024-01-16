@@ -4,12 +4,17 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ListKelvin/book-store/pkg/config"
 	"github.com/ListKelvin/book-store/pkg/routes"
 	"github.com/gorilla/mux"
 	_ "gorm.io/driver/mysql"
 )
 
+func init() {
+	config.Connect()
 
+	server = gin.Default()
+}
 func main(){
 	r := mux.NewRouter()
 	routes.RegisterBookStoreRoutes(r)
