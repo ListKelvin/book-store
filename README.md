@@ -11,4 +11,9 @@ This is the Book-Store BE
 - GetGoogleUser function will use the access token to fetch the user’s account information.
 - ...
 
+issues:
+
+- login gg note work -> change the flow use package
+- make flow of mux route -> research
+
 ## Tech Stack
