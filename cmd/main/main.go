@@ -14,7 +14,9 @@ func main(){
 	r := mux.NewRouter()
 	routes.RegisterBookStoreRoutes(r)
 	http.Handle("/", r)
+	r.Use(mux.CORSMethodMiddleware(r))
 	log.Fatal(http.ListenAndServe("localhost:8080", r))
+	
 }
 
 
