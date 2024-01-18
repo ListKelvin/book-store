@@ -1,7 +1,8 @@
 package config
 
 import (
-	"github.com/ListKelvin/book-store/pkg/models"
+	"fmt"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,9 +20,9 @@ func Connect() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&models.Book{})
-	db.AutoMigrate(&models.User{})
 
+	// db.AutoMigrate(&models.User{})
+	fmt.Printf("Listening to port %s", "8080")
 	db = d
 }
 
