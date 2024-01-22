@@ -20,6 +20,8 @@ func init() {
 	config.Connect()
 	db = config.GetDB()
 	db.AutoMigrate(&Book{})
+	db.AutoMigrate(&User{})
+
 }
 
 func (b *Book) CreateBook() (*Book, error) {

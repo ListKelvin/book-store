@@ -22,7 +22,7 @@ func Connect() {
 	}
 
 	// db.AutoMigrate(&models.User{})
-	fmt.Printf("Listening to port %s", "8080")
+	fmt.Println("Listening to port", "8080")
 	db = d
 }
 

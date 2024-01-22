@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -19,8 +20,8 @@ import (
 // Scopes: OAuth 2.0 scopes provide a way to limit the amount of access that is granted to an access token.
 var googleOauthConfig = &oauth2.Config{
 	RedirectURL:  "http://localhost:8080/auth/google/callback",
-	ClientID:     "15935712647-rinlntgkm5lfts8ph788k8jq5td0g1tm.apps.googleusercontent.com",
-	ClientSecret:"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",
+	ClientID:     "ask minh",
+	ClientSecret:"ask minh",
 	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
 	Endpoint:     google.Endpoint,
 }
@@ -31,7 +32,7 @@ func OauthGoogleLogin(w http.ResponseWriter, r *http.Request) {
 
 	// Create oauthState cookie
 	oauthState := generateStateOauthCookie(w)
-
+fmt.Println("clientId: "+googleOauthConfig.ClientID)
 	/*
 	AuthCodeURL receive state that is a token to protect the user from CSRF attacks. You must always provide a non-empty string and
 	validate that it matches the the state query parameter on your redirect callback.
@@ -56,11 +57,15 @@ func OauthGoogleCallback(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
-
+	res, _ :=json.Marshal(data)
 	// GetOrCreate User in your db.
 	// Redirect or response with a token.
 	// More code .....
-	fmt.Fprintf(w, "UserInfo: %s\n", data)
+	// fmt.Fprintf(w, "UserInfo: %s\n", data)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusAccepted)
+	w.Write(res)
+
 }
 
 func generateStateOauthCookie(w http.ResponseWriter) string {
