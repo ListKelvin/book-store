@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type author struct {
+type Author struct {
 	gorm.Model
 
 	Id 				uint64  `gorm:"primary_key;auto_increment" json:"id"`
