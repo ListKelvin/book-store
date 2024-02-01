@@ -13,7 +13,6 @@ This is the Book-Store BE
 
 issues:
 
-- login gg note work -> change the flow use package
-- make flow of mux route -> research
+- create authController
 
 ## Tech Stack

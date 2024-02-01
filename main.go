@@ -9,8 +9,6 @@ import (
 	_ "github.com/ListKelvin/book-store/pkg/middleware"
 	"github.com/ListKelvin/book-store/pkg/routes"
 	"github.com/joho/godotenv"
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 
 	"github.com/gorilla/mux"
 	_ "gorm.io/driver/mysql"
@@ -27,13 +25,6 @@ func init() {
 	if err := godotenv.Load(".env"); err != nil {
 		log.Print("sad .env file found")
 	}
-}
-var GoogleOauthConfig = &oauth2.Config{
-	RedirectURL:  os.Getenv("GOOGLE_REDIRECT_URL"),
-	ClientID:     os.Getenv("GOOGLE_OAUTH_CLIENT_ID"),
-	ClientSecret: os.Getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-	Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
-	Endpoint:     google.Endpoint,
 }
 
 func main(){
