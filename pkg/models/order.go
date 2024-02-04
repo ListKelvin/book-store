@@ -18,4 +18,8 @@ type Order struct {
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
 	Shipper Shipper
 	Discount Discount
+
+//m - m
+	Customer []*Customer `gorm:"many2many:customers_orders"`
+	
 }

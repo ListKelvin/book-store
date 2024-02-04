@@ -16,7 +16,7 @@ type Book struct {
 	Isbn string `gorm:"primaryKey" json:"isbn"`
 	Title string `gorm:"size:255;not null;unique" json:"title,omitempty"`
 	Available_Quantity uint16 `gorm:"default:0" json:"available_quantity"`
-	Price uint16 `gorm:"default:0" json:"price"`
+	Price uint16 `gorm:"default:0" json:"price,omitempty"`
 	Edition uint8 `gorm:"default:0" json:"edition"`
 	Publication_Date time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"publication_date"`
 // belongs to

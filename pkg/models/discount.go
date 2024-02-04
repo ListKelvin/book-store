@@ -8,6 +8,7 @@ type Discount struct {
 	Name  	string 	`gorm:"text;not null;" json:"name"`
 	Value  	uint16 	`gorm:"number;not null;" json:"value"`
 	OrderId uint16
+	CustomerId uint
 	Book []*Book `gorm:"many2many:books_discounts"`
 
 }
