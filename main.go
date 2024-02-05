@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"os"
 
-	_ "github.com/ListKelvin/book-store/pkg/middleware"
-	"github.com/ListKelvin/book-store/pkg/routes"
+	_ "github.com/ListKelvin/book-store/api/middleware"
+	"github.com/ListKelvin/book-store/api/routes"
 	"github.com/joho/godotenv"
 
 	"github.com/gorilla/mux"

@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	"github.com/ListKelvin/book-store/pkg/config"
+	"github.com/ListKelvin/book-store/api/config"
 	// "github.com/ListKelvin/book-store/pkg/models"
 	"gorm.io/gorm"
 )

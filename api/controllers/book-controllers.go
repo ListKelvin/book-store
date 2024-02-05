@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/ListKelvin/book-store/pkg/models"
-	"github.com/ListKelvin/book-store/pkg/utils"
+	"github.com/ListKelvin/book-store/api/models"
+	"github.com/ListKelvin/book-store/api/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -66,6 +66,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request){
 
 }
 
+// need to fix
 func UpdateBook(w http.ResponseWriter, r *http.Request){
 	updateBook := &models.Book{}
 	utils.ParseBody(r, updateBook)
@@ -77,18 +78,18 @@ func UpdateBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book,db:= models.GetBookById(ID)
+	book , db:= models.GetBookById(ID)
 
-	if updateBook.Name != "" {
-		book.Name = updateBook.Name
-	}
-	if updateBook.Author != "" {
-		book.Name = updateBook.Author
-	}
+	// if updateBook.Name != "" {
+	// 	book.Name = updateBook.Name
+	// }
+	// if updateBook.Author != "" {
+	// 	book.Name = updateBook.Author
+	// }
 
-	if updateBook.Publication != "" {
-		book.Name = updateBook.Publication
-	}
+	// if updateBook.Publication != "" {
+	// 	book.Name = updateBook.Publication
+	// }
 
 
 

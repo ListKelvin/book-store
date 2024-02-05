@@ -3,8 +3,8 @@ package routes
 import (
 	"net/http"
 
-	"github.com/ListKelvin/book-store/pkg/controllers"
-	"github.com/ListKelvin/book-store/pkg/utils"
+	"github.com/ListKelvin/book-store/api/controllers"
+	"github.com/ListKelvin/book-store/api/utils"
 
 	"github.com/gorilla/mux"
 )
