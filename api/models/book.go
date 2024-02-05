@@ -3,13 +3,11 @@ package models
 import (
 	"time"
 
-	"github.com/ListKelvin/book-store/api/config"
 	// "github.com/ListKelvin/book-store/pkg/models"
 	"gorm.io/gorm"
 )
 
-
-var db *gorm.DB
+// var db *gorm.DB
 
 type Book struct {
 	gorm.Model
@@ -38,15 +36,14 @@ type Book struct {
 	Review []Review
 
 }
-func init() {
-	config.Connect()
-	db = config.GetDB()
-	db.AutoMigrate(&Book{})
-	db.AutoMigrate(&User{})
+// func init() {
 
-}
+// 	db = config.GetDB()
 
-func (b *Book) CreateBook() (*Book, error) {
+
+// }
+
+func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
     
 	result := db.Create(&b)
     if result.Error != nil {
@@ -55,21 +52,21 @@ func (b *Book) CreateBook() (*Book, error) {
     return b, nil // Return the created book and a nil error if successful
 }
 
-func GetAllBooks() []Book{
+func GetAllBooks(db *gorm.DB) []Book{
 	Books :=  make([]Book, 0)
 	db.Find(&Books)
 	return Books
 }
 
-func GetBookById(Id int64) (*Book, *gorm.DB) {
+func GetBookById(Id int64,db *gorm.DB ) (*Book, *gorm.DB) {
 	var getBook Book
 
-	db:= db.Where("ID=?", Id).Find(&getBook)
-	return &getBook, db
+	result:= db.Where("ID=?", Id).Find(&getBook)
+	return &getBook, result
 }
 
 
-func DeleteBook(ID int64) Book {
+func DeleteBook(ID int64, db *gorm.DB ) Book {
 	var book Book
 
 	 db.Where("ID=?", ID).Delete(book)
