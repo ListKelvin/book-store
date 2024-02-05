@@ -1,4 +1,4 @@
-package config
+package controllers
 
 import (
 	"fmt"
@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/ListKelvin/book-store/api/models"
-	"github.com/ListKelvin/book-store/api/routes"
 	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -45,7 +44,8 @@ var errList = make(map[string]string)
 func (server *Server) Initialize(DbDriver, DbUser, DbPassword, DbPort, DbHost, DbName string) {
 	var err error
 
-		DbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName)
+		DbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUser, DbPassword, DbHost, DbPort, DbName)
+		fmt.Print("DbUrl: "+ DbUrl)
 		server.DB, err = gorm.Open(mysql.Open(DbUrl), &gorm.Config{})
 		if err != nil {
 			fmt.Printf("Cannot connect to %s database", DbDriver)
@@ -73,7 +73,7 @@ func (server *Server) Initialize(DbDriver, DbUser, DbPassword, DbPort, DbHost, D
 	server.Router = mux.NewRouter()
 	server.Router.Use(mux.CORSMethodMiddleware(server.Router))
 
-	routes.InitializeRoutes(server.Router)
+
 }
 
 func (server *Server) Run(addr string) {

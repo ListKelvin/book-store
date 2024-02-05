@@ -11,16 +11,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
+
 var NewBook models.Book 
-func GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks := models.GetAllBooks()
+var server = Server{}
+func (server *Server) GetBooks(w http.ResponseWriter, r *http.Request){
+	newBooks := models.GetAllBooks(server.DB)
 	res, _ :=json.Marshal(newBooks)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(res)
 }
 
-func GetBookById(w http.ResponseWriter, r *http.Request){
+func(server *Server) GetBookById(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0 ,0)
@@ -29,7 +31,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	bookDetails, _ := models.GetBookById(ID)
+	bookDetails, _ := models.GetBookById(ID, server.DB)
 	res, _ :=json.Marshal(bookDetails)
 
 	w.Header().Set("Content-Type", "pkglication/json")
@@ -40,7 +42,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 func CreateBook(w http.ResponseWriter, r *http.Request){
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
-	b,_:= CreateBook.CreateBook()
+	b,_:= CreateBook.CreateBook(server.DB)
 	res, _ :=json.Marshal(b)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
@@ -48,7 +50,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request){
 
 }
 
-func DeleteBook(w http.ResponseWriter, r *http.Request){
+func(server *Server) DeleteBook(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0 ,0)
@@ -57,7 +59,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book:= models.DeleteBook(ID)
+	book:= models.DeleteBook(ID , server.DB)
 	res, _ :=json.Marshal(book)
 
 	w.Header().Set("Content-Type", "pkglication/json")
@@ -67,7 +69,7 @@ func DeleteBook(w http.ResponseWriter, r *http.Request){
 }
 
 // need to fix
-func UpdateBook(w http.ResponseWriter, r *http.Request){
+func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 	updateBook := &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)
@@ -78,7 +80,7 @@ func UpdateBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book , db:= models.GetBookById(ID)
+	book , db:= models.GetBookById(ID,server.DB)
 
 	// if updateBook.Name != "" {
 	// 	book.Name = updateBook.Name
