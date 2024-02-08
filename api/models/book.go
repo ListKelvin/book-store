@@ -38,12 +38,7 @@ type Book struct {
 	Review []Review
 
 }
-// func init() {
 
-// 	db = config.GetDB()
-
-
-// }
 func (b *Book) Prepare() {
 	b.Isbn= "";
 	b.Title = html.EscapeString(strings.TrimSpace(b.Title));
@@ -66,7 +61,7 @@ func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
     return b, nil // Return the created book and a nil error if successful
 }
 
-func GetAllBooks(db *gorm.DB) ([]Book, error) {
+func  GetAllBooks(db *gorm.DB) ([]Book, error) {
 	Books :=  make([]Book, 0)
 	result := db.Find(&Books)
 	if result.Error != nil{
@@ -86,12 +81,12 @@ func(b *Book) GetBookById(Id int64, db *gorm.DB ) (*Book, error) {
 }
 
 
-func DeleteBook(ID int64, db *gorm.DB ) (*Book, error) {
-	var book Book
+func(b *Book) DeleteBook(ID int64, db *gorm.DB ) (*Book, error) {
 
-	result:= db.Where("ID=?", ID).Delete(book)
+
+	result:= db.Where("ID=?", ID).Delete(&b)
 	if result.Error != nil{
 		return nil, result.Error
 	}
-	return &book, nil
+	return &Book{}, nil
 }
