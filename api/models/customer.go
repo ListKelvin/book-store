@@ -21,3 +21,4 @@ type Customer struct {
 // m - m
 	Order []*Order `gorm:"many2many:customers_orders;"`
 }
+
