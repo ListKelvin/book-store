@@ -10,13 +10,13 @@ import (
 // var db *gorm.DB
 
 type Book struct {
-	gorm.Model
-	Isbn string `gorm:"primaryKey" json:"isbn"`
-	Title string `gorm:"size:255;not null;unique" json:"title,omitempty"`
+	// gorm.Model
+	Isbn string `gorm:"primaryKey;size:13;unique_index" json:"isbn"`
+	Title string `gorm:"size:255;not null;unique" json:"title"`
 	Available_Quantity uint16 `gorm:"default:0" json:"available_quantity"`
 	Price uint16 `gorm:"default:0" json:"price,omitempty"`
 	Edition uint8 `gorm:"default:0" json:"edition"`
-	Publication_Date time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"publication_date"`
+	Publication_Date time.Time `json:"publication_date"`
 // belongs to
 	Author Author `json:"author"`
 	AuthorID uint32 `gorm:"not null" json:"author_id"`
@@ -24,8 +24,8 @@ type Book struct {
 	Publisher Publisher `json:"publication"`
 	PublisherID uint32 `gorm:"not null" json:"publisher_id"`
 
-	Created_At time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	// Created_At time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
+	// UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
 // m2m a book has many genre
 	Genre []*Genre `gorm:"many2many:books_genres;"`
 	Discount []*Discount `gorm:"many2many:books_discounts;"`
