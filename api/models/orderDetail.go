@@ -1,10 +1,6 @@
 package models
 
 import (
-	"html"
-	"strings"
-	"time"
-
 	"gorm.io/gorm"
 )
 
@@ -15,51 +11,41 @@ type OrderDetail struct {
 	BookIsbn string
 }
 
-func (b *Book) Prepare() {
-	b.Isbn = ""
-	b.Title = html.EscapeString(strings.TrimSpace(b.Title))
-	b.Available_Quantity = 0
-	b.Edition = 0
-	b.Genre = []*Genre{}
-	b.Price = 0
-	b.Author = Author{}
-	b.Discount = []*Discount{}
-	b.Publication_Date = time.Now()
-	b.Review = []Review{}
+func (o *OrderDetail) Prepare() {
 
 }
-func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
+func (od *OrderDetail) CreateOrderDetail(db *gorm.DB) (*OrderDetail, error) {
 
-	result := db.Create(&b)
+	result := db.Create(&od)
 	if result.Error != nil {
 		return nil, result.Error // Return error if creation failed
 	}
-	return b, nil // Return the created book and a nil error if successful
+	return od, nil // Return the created book and a nil error if successful
 }
 
-func GetAllBooks(db *gorm.DB) ([]Book, error) {
-	Books := make([]Book, 0)
-	result := db.Find(&Books)
+func GetAllOrderDetails(db *gorm.DB) ([]OrderDetail, error) {
+	OrderDetails := make([]OrderDetail, 0)
+	result := db.Find(&OrderDetails)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return Books, nil
+	return OrderDetails, nil
 }
 
-func (b *Book) GetBookById(Id int64, db *gorm.DB) (*Book, error) {
+func (od *OrderDetail) GetOrderDetailById(Id int64, db *gorm.DB) (*OrderDetail, error) {
 
-	result := db.Debug().Where("ID=?", Id).Find(&b)
+	result := db.Debug().Where("ID=?", Id).Find(&od)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return b, nil
+	return od, nil
 }
 
-func (b *Book) DeleteBook(ID int64, db *gorm.DB) (*Book, error) {
+func (od *OrderDetail) DeleteOrderDetail(ID int64, db *gorm.DB) (*OrderDetail, error) {
 
-	result := db.Where("ID=?", ID).Delete(&b)
+	result := db.Where("ID=?", ID).Delete(&od)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return &Book{}, nil
+	return &OrderDetail{}, nil
 }

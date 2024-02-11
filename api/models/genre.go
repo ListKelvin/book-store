@@ -1,10 +1,6 @@
 package models
 
 import (
-	"html"
-	"strings"
-	"time"
-
 	"gorm.io/gorm"
 )
 
@@ -16,54 +12,45 @@ type Genre struct {
 
 }
 
-func (b *Book) Prepare() {
-	b.Isbn= "";
-	b.Title = html.EscapeString(strings.TrimSpace(b.Title));
-	b.Available_Quantity = 0;
-	b.Edition= 0
-	b.Genre = []*Genre{}
-	b.Price = 0
-	b.Author = Author{}
-	b.Discount = []*Discount{}
-	b.Publication_Date = time.Now()
-	b.Review = []Review{}
+func (g *Genre) Prepare() {
+
 	
 }
-func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
+func (g *Genre) CreateGenre(db *gorm.DB) (*Genre, error) {
     
-	result := db.Create(&b)
+	result := db.Create(&g)
     if result.Error != nil {
         return nil, result.Error // Return error if creation failed
     }
-    return b, nil // Return the created book and a nil error if successful
+    return g, nil // Return the created book and a nil error if successful
 }
 
-func  GetAllBooks(db *gorm.DB) ([]Book, error) {
-	Books :=  make([]Book, 0)
-	result := db.Find(&Books)
+func  GetAllGenres(db *gorm.DB) ([]Genre, error) {
+	Genres :=  make([]Genre, 0)
+	result := db.Find(&Genres)
 	if result.Error != nil{
 		return nil, result.Error
 	}
-	return Books, nil
+	return Genres, nil
 }
 
-func(b *Book) GetBookById(Id int64, db *gorm.DB ) (*Book, error) {
+func(g *Genre) GetGenreById(Id int64, db *gorm.DB ) (*Genre, error) {
 
 
-	result:= db.Debug().Where("ID=?", Id).Find(&b)
+	result:= db.Debug().Where("ID=?", Id).Find(&g)
 		if result.Error != nil{
 		return nil, result.Error
 	}
-	return b, nil
+	return g, nil
 }
 
 
-func(b *Book) DeleteBook(ID int64, db *gorm.DB ) (*Book, error) {
+func(b *Genre) DeleteGenre(ID int64, db *gorm.DB ) (*Genre, error) {
 
 
 	result:= db.Where("ID=?", ID).Delete(&b)
 	if result.Error != nil{
 		return nil, result.Error
 	}
-	return &Book{}, nil
+	return &Genre{}, nil
 }

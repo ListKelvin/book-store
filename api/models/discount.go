@@ -1,10 +1,6 @@
 package models
 
 import (
-	"html"
-	"strings"
-	"time"
-
 	"gorm.io/gorm"
 )
 
@@ -19,54 +15,45 @@ type Discount struct {
 
 }
 
-func (b *Book) Prepare() {
-	b.Isbn= "";
-	b.Title = html.EscapeString(strings.TrimSpace(b.Title));
-	b.Available_Quantity = 0;
-	b.Edition= 0
-	b.Genre = []*Genre{}
-	b.Price = 0
-	b.Author = Author{}
-	b.Discount = []*Discount{}
-	b.Publication_Date = time.Now()
-	b.Review = []Review{}
+func (d *Discount) Prepare() {
+
 	
 }
-func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
+func (d *Discount) CreateDiscount(db *gorm.DB) (*Discount, error) {
     
-	result := db.Create(&b)
+	result := db.Create(&d)
     if result.Error != nil {
         return nil, result.Error // Return error if creation failed
     }
-    return b, nil // Return the created book and a nil error if successful
+    return d, nil // Return the created book and a nil error if successful
 }
 
-func  GetAllBooks(db *gorm.DB) ([]Book, error) {
-	Books :=  make([]Book, 0)
-	result := db.Find(&Books)
+func  GetAllDiscounts(db *gorm.DB) ([]Discount, error) {
+	Discounts :=  make([]Discount, 0)
+	result := db.Find(&Discounts)
 	if result.Error != nil{
 		return nil, result.Error
 	}
-	return Books, nil
+	return Discounts, nil
 }
 
-func(b *Book) GetBookById(Id int64, db *gorm.DB ) (*Book, error) {
+func(d *Discount) GetDiscountById(Id int64, db *gorm.DB ) (*Discount, error) {
 
 
-	result:= db.Debug().Where("ID=?", Id).Find(&b)
+	result:= db.Debug().Where("ID=?", Id).Find(&d)
 		if result.Error != nil{
 		return nil, result.Error
 	}
-	return b, nil
+	return d, nil
 }
 
 
-func(b *Book) DeleteBook(ID int64, db *gorm.DB ) (*Book, error) {
+func(d *Book) DeleteDiscount(ID int64, db *gorm.DB ) (*Discount, error) {
 
 
-	result:= db.Where("ID=?", ID).Delete(&b)
+	result:= db.Where("ID=?", ID).Delete(&d)
 	if result.Error != nil{
 		return nil, result.Error
 	}
-	return &Book{}, nil
+	return &Discount{}, nil
 }
