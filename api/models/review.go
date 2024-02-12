@@ -12,6 +12,13 @@ type Review struct {
 	// Create_Date time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"create_date,omitempty"`
 	// Updated_Date time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"update_date,omitempty"`
 }
+type ReviewRepository interface {
+	Prepare()
+	CreateReview(db *gorm.DB) (*Review, error)
+	GetAllReviews(db *gorm.DB) ([]Review, error)
+	GetReviewById(Id int64, db *gorm.DB ) (*Review, error)
+	DeleteReview(ID int64, db *gorm.DB ) (*Review, error)
+}
 
 func (r *Review) Prepare() {
 

@@ -11,7 +11,13 @@ type Genre struct {
 	Book []*Book `gorm:"many2many:books_genres"`
 
 }
-
+type GenreRepository interface {
+	Prepare()
+	CreateGenre(db *gorm.DB) (*Genre, error)
+	GetAllGenres(db *gorm.DB) ([]Genre, error)
+	GetGenreById(Id int64, db *gorm.DB ) (*Genre, error)
+	DeleteGenre(ID int64, db *gorm.DB ) (*Genre, error)
+}
 func (g *Genre) Prepare() {
 
 	

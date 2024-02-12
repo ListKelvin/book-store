@@ -11,6 +11,14 @@ type OrderDetail struct {
 	BookIsbn string
 }
 
+type OrderDetailRepository interface {
+	Prepare()
+	CreateOrderDetail(db *gorm.DB) (*OrderDetail, error)
+	GetAllOrderDetails(db *gorm.DB) ([]OrderDetail, error)
+	GetOrderDetailById(Id int64, db *gorm.DB ) (*OrderDetail, error)
+	DeleteOrderDetail(ID int64, db *gorm.DB ) (*OrderDetail, error)
+}
+
 func (o *OrderDetail) Prepare() {
 
 }

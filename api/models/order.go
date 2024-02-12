@@ -22,7 +22,13 @@ type Order struct {
 	
 }
 
-
+type OrderRepository interface {
+	Prepare()
+	CreateOrder(db *gorm.DB) (*Order, error)
+	GetAllOrders(db *gorm.DB) ([]Order, error)
+	GetOrderById(Id int64, db *gorm.DB ) (*Order, error)
+	DeleteOrder(ID int64, db *gorm.DB ) (*Order, error)
+}
 func (o *Order) Prepare() {
 
 	
@@ -65,3 +71,4 @@ func(o *Order) DeleteOrder(ID int64, db *gorm.DB ) (*Order, error) {
 	}
 	return &Order{}, nil
 }
+

@@ -38,7 +38,13 @@ type Book struct {
 	Review []Review
 
 }
-
+type BookRepository interface {
+	Prepare()
+	CreateBook(db *gorm.DB) (*Book, error)
+	GetAllBooks(db *gorm.DB) ([]Book, error)
+	GetBookById(Id int64, db *gorm.DB ) (*Book, error)
+	DeleteBook(ID int64, db *gorm.DB ) (*Book, error)
+}
 func (b *Book) Prepare() {
 	b.Isbn= "";
 	b.Title = html.EscapeString(strings.TrimSpace(b.Title));

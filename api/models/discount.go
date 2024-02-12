@@ -14,7 +14,13 @@ type Discount struct {
 	Book []*Book `gorm:"many2many:books_discounts"`
 
 }
-
+type DiscountRepository interface {
+	Prepare()
+	CreateDiscount(db *gorm.DB) (*Discount, error)
+	GetAllDiscounts(db *gorm.DB) ([]Discount, error)
+	GetDiscountById(Id int64, db *gorm.DB ) (*Discount, error)
+	DeleteDiscount(ID int64, db *gorm.DB ) (*Discount, error)
+}
 func (d *Discount) Prepare() {
 
 	

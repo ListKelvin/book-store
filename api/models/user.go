@@ -14,7 +14,14 @@ type User struct {
 
 }
 
-
+// UserRepository : represent the user's repository contract
+type UserRepository interface {
+	Prepare()
+	CreateUser(db *gorm.DB) (*User, error)
+	GetAllUsers(db *gorm.DB) ([]User, error)
+	GetUserById(Id int64, db *gorm.DB ) (*User, error)
+	DeleteUser(ID int64, db *gorm.DB ) (*User, error)
+}
 
 type RegisterUserInput struct {
 	Username     string `json:"name" binding:"required"`

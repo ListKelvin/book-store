@@ -23,7 +23,13 @@ type Customer struct {
 // m - m
 	Order []*Order `gorm:"many2many:customers_orders;"`
 }
-
+type CustomerRepository interface {
+	Prepare()
+	CreateCustomer(db *gorm.DB) (*Customer, error)
+	GetAllCustomers(db *gorm.DB) ([]Customer, error)
+	GetCustomerById(Id int64, db *gorm.DB ) (*Customer, error)
+	DeleteCustomer(ID int64, db *gorm.DB ) (*Customer, error)
+}
 func (c *Customer) Prepare() {
 
 	

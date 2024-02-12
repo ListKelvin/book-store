@@ -10,6 +10,14 @@ type Publisher struct {
 	Phone_No string `gorm:"default:text;not null" json:"phone_no"`
 }
 
+type PublisherRepository interface {
+	Prepare()
+	CreatePublisher(db *gorm.DB) (*Publisher, error)
+	GetAllPublishers(db *gorm.DB) ([]Publisher, error)
+	GetPublisherById(Id int64, db *gorm.DB ) (*Publisher, error)
+	DeletePublisher(ID int64, db *gorm.DB ) (*Publisher, error)
+}
+
 func (p *Publisher) Prepare() {
 
 

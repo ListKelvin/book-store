@@ -9,7 +9,13 @@ type Shipper struct {
 	Name    string `gorm:"text;not null;" json:"name"`
 	OrderId uint
 }
-
+type ShipperRepository interface {
+	Prepare()
+	CreateShipper(db *gorm.DB) (*Shipper, error)
+	GetAllShippers(db *gorm.DB) ([]Shipper, error)
+	GetShipperById(Id int64, db *gorm.DB ) (*Shipper, error)
+	DeleteShipper(ID int64, db *gorm.DB ) (*Shipper, error)
+}
 func (s *Shipper) Prepare() {
 
 
