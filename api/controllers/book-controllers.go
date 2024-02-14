@@ -14,8 +14,9 @@ import (
 
 var NewBook models.Book 
 var server = Server{}
+
 func (server *Server) GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks := models.GetAllBooks(server.DB)
+	newBooks, _ := models.GetAllBooks(server.DB)
 	res, _ :=json.Marshal(newBooks)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
@@ -31,7 +32,7 @@ func(server *Server) GetBookById(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	bookDetails, _ := models.GetBookById(ID, server.DB)
+	bookDetails, _ := NewBook.GetBookById(ID, server.DB)
 	res, _ :=json.Marshal(bookDetails)
 
 	w.Header().Set("Content-Type", "pkglication/json")
@@ -59,7 +60,7 @@ func(server *Server) DeleteBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book:= models.DeleteBook(ID , server.DB)
+	book, _ := NewBook.DeleteBook(ID , server.DB)
 	res, _ :=json.Marshal(book)
 
 	w.Header().Set("Content-Type", "pkglication/json")
@@ -80,7 +81,7 @@ func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book , db:= models.GetBookById(ID,server.DB)
+	book , _ := NewBook.GetBookById(ID,server.DB)
 
 	// if updateBook.Name != "" {
 	// 	book.Name = updateBook.Name
@@ -95,7 +96,7 @@ func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 
 
 
-	db.Save(&book)
+	server.DB.Save(&book)
 	res, _ :=json.Marshal(book)
 
 	w.Header().Set("Content-Type", "pkglication/json")

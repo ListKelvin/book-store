@@ -3,10 +3,9 @@ package controllers
 import (
 	"fmt"
 	"log"
-	"net/http"
 
 	"github.com/ListKelvin/book-store/api/models"
-	"github.com/gorilla/mux"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -17,7 +16,7 @@ var(
 
 type Server struct {
 	DB     *gorm.DB
-	Router *mux.Router
+
 }
 
 
@@ -58,13 +57,8 @@ func (server *Server) Initialize(DbDriver, DbUser, DbPassword, DbPort, DbHost, D
 		&models.Shipper{},
 		&models.Discount{},
 	)
-//Declare route default with mux
-	server.Router = mux.NewRouter()
-	server.Router.Use(mux.CORSMethodMiddleware(server.Router))
+
 
 
 }
 
-func (server *Server) Run(addr string) {
-	log.Fatal(http.ListenAndServe(addr, server.Router))
-}

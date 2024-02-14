@@ -3,9 +3,12 @@ package api
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/ListKelvin/book-store/api/controllers"
+	"github.com/ListKelvin/book-store/api/routes"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -35,9 +38,12 @@ func Run() {
 	// This is for testing, when done, do well to comment
 	// seed.Load(server.DB)
 
-	apiPort := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
+	apiPort := fmt.Sprintf(":%s ", os.Getenv("API_PORT"))
+
 	fmt.Printf("Listening to port %s", apiPort)
 
-	server.Run(apiPort)
 
+	router := mux.NewRouter()
+	routes.InitializeRoutes(router)
+	log.Fatal(http.ListenAndServe(apiPort, router))
 }
