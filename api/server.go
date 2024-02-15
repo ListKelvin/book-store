@@ -37,13 +37,13 @@ func Run() {
 
 	// This is for testing, when done, do well to comment
 	// seed.Load(server.DB)
+// old school
+	// apiPort := fmt.Sprintf("127.0.0.1:%s ", os.Getenv("API_PORT"))
 
-	apiPort := fmt.Sprintf(":%s ", os.Getenv("API_PORT"))
-
-	fmt.Printf("Listening to port %s", apiPort)
+	fmt.Printf("Listening to port %s", os.Getenv("API_PORT"))
 
 
 	router := mux.NewRouter()
 	routes.InitializeRoutes(router)
-	log.Fatal(http.ListenAndServe(apiPort, router))
+	log.Fatal(http.ListenAndServe(os.Getenv("API_PORT"), router))
 }

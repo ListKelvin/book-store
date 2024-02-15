@@ -15,8 +15,12 @@ import (
 var NewBook models.Book 
 var server = Server{}
 
-func (server *Server) GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks, _ := models.GetAllBooks(server.DB)
+func  GetBooks(w http.ResponseWriter, r *http.Request){
+	newBooks, err := models.GetAllBooks(server.DB)
+	if err != nil {
+		fmt.Println("Error while converting")
+
+	}
 	res, _ :=json.Marshal(newBooks)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
