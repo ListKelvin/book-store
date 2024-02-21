@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"html"
 	"strings"
 	"time"
@@ -66,20 +67,30 @@ func (b *Book) CreateBook(db *gorm.DB) (*Book, error) {
     }
     return b, nil // Return the created book and a nil error if successful
 }
-
+func  GetRequest() (string, error) {
+	// Books :=  make([]Book, 0)
+	fmt.Print("db: ")
+	// result := db.Debug().Find(&Books)
+	// if result.Error != nil{
+	// fmt.Print("db: ", result.Error)
+	// }
+	return "Minh", nil
+}
 func  GetAllBooks(db *gorm.DB) ([]Book, error) {
 	Books :=  make([]Book, 0)
-	result := db.Find(&Books)
+	fmt.Print("db: ", db.Config)
+	result := db.Debug().Find(&Books)
 	if result.Error != nil{
+		
 		return nil, result.Error
 	}
 	return Books, nil
 }
 
-func(b *Book) GetBookById(Id int64, db *gorm.DB ) (*Book, error) {
+func(b *Book) GetBookById(Id string, db *gorm.DB ) (*Book, error) {
 
 
-	result:= db.Debug().Where("ID=?", Id).Find(&b)
+	result:= db.Debug().Where("isbn=?", Id).Find(&b)
 		if result.Error != nil{
 		return nil, result.Error
 	}

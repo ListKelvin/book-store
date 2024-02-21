@@ -13,42 +13,60 @@ import (
 
 
 var NewBook models.Book 
-var server = Server{}
 
-func  GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks, err := models.GetAllBooks(server.DB)
+func GetBooks(w http.ResponseWriter, r *http.Request){
+	newBooks, err := models.GetAllBooks(db)
 	if err != nil {
 		fmt.Println("Error while converting")
 
 	}
-	res, _ :=json.Marshal(newBooks)
+	response := models.Response{
+    Data: newBooks,  // Populate data based on request processing
+    Message: "Success", // Or set an appropriate message
+    Status:  "OK",
+  }
+
+	res, _ :=json.Marshal(response)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(res)
 }
 
-func(server *Server) GetBookById(w http.ResponseWriter, r *http.Request){
+func GetBookById(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
-	bookId := vars["bookId"]
-	ID, err := strconv.ParseInt(bookId, 0 ,0)
-	if err != nil {
+	bookId, err := vars["bookId"]
+	// ID, err := strconv.ParseInt(bookId, 0 ,0)
+	if err != false {
 		fmt.Println("Error while converting")
 
 	}
 
-	bookDetails, _ := NewBook.GetBookById(ID, server.DB)
-	res, _ :=json.Marshal(bookDetails)
+	bookDetails, _ := NewBook.GetBookById(bookId, db)
+
+
+	response := models.Response{
+    Data: bookDetails,  // Populate data based on request processing
+    Message: "Success", // Or set an appropriate message
+    Status:  "OK",
+  }
+	res, _ :=json.Marshal(response)
 
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(res)
 
 }
-func CreateBook(w http.ResponseWriter, r *http.Request){
+func(server *Server)  CreateBook(w http.ResponseWriter, r *http.Request){
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
 	b,_:= CreateBook.CreateBook(server.DB)
-	res, _ :=json.Marshal(b)
+	 response := models.Response{
+    Data: b,  // Populate data based on request processing
+    Message: "Success", // Or set an appropriate message
+    Status:  "OK",
+  }
+
+	res, _ :=json.Marshal(response)
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
@@ -78,14 +96,14 @@ func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 	updateBook := &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)
-	bookId := vars["bookId"]
-	ID, err := strconv.ParseInt(bookId, 0 ,0)
-	if err != nil {
+	bookId, err := vars["bookId"]
+	// ID, err := strconv.ParseInt(bookId, 0 ,0)
+	if err != false {
 		fmt.Println("Error while converting")
 
 	}
 
-	book , _ := NewBook.GetBookById(ID,server.DB)
+	book , _ := NewBook.GetBookById(bookId,server.DB)
 
 	// if updateBook.Name != "" {
 	// 	book.Name = updateBook.Name

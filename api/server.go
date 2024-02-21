@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/ListKelvin/book-store/api/controllers"
+	"github.com/ListKelvin/book-store/api/middleware"
 	"github.com/ListKelvin/book-store/api/routes"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -45,5 +46,7 @@ func Run() {
 
 	router := mux.NewRouter()
 	routes.InitializeRoutes(router)
+	router.Use(middleware.LoggingMiddleware)
+
 	log.Fatal(http.ListenAndServe(os.Getenv("API_PORT"), router))
 }

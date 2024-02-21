@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"net/http"
+
 	"github.com/ListKelvin/book-store/api/controllers"
 	"github.com/gorilla/mux"
 )
@@ -21,6 +23,8 @@ func InitializeRoutes(s *mux.Router) {
 	// s.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	v1 := s.PathPrefix("/api/v1").Subrouter()
 	v1.HandleFunc("/book/", controllers.GetBooks)
+	v1.HandleFunc("/book/{bookId}", controllers.GetBookById).Methods(http.MethodGet,  http.MethodOptions)
+
 	// v1.HandleFunc("/book/", controllers.CreateBook)
 	
 }
