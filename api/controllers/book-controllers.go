@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/ListKelvin/book-store/api/models"
 	"github.com/ListKelvin/book-store/api/utils"
@@ -56,10 +55,10 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 
 }
-func(server *Server)  CreateBook(w http.ResponseWriter, r *http.Request){
+func  CreateBook(w http.ResponseWriter, r *http.Request){
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
-	b,_:= CreateBook.CreateBook(server.DB)
+	b,_:= CreateBook.CreateBook(db)
 	 response := models.Response{
     Data: b,  // Populate data based on request processing
     Message: "Success", // Or set an appropriate message
@@ -73,17 +72,24 @@ func(server *Server)  CreateBook(w http.ResponseWriter, r *http.Request){
 
 }
 
-func(server *Server) DeleteBook(w http.ResponseWriter, r *http.Request){
+func DeleteBook(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
-	ID, err := strconv.ParseInt(bookId, 0 ,0)
-	if err != nil {
-		fmt.Println("Error while converting")
+	// ID, err := strconv.ParseInt(bookId, 0 ,0)
 
+
+	book, er:= NewBook.DeleteBook(bookId , db)
+
+	if er != nil {
+		fmt.Println("Error in db: ", er.Error())
+		
 	}
-
-	book, _ := NewBook.DeleteBook(ID , server.DB)
-	res, _ :=json.Marshal(book)
+	response := models.Response{
+    Data: book,  // Populate data based on request processing
+    Message: "Success", // Or set an appropriate message
+    Status:  "OK",
+  	}
+	res, _ :=json.Marshal(response)
 
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
@@ -92,7 +98,7 @@ func(server *Server) DeleteBook(w http.ResponseWriter, r *http.Request){
 }
 
 // need to fix
-func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
+func UpdateBook(w http.ResponseWriter, r *http.Request){
 	updateBook := &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)
@@ -103,7 +109,7 @@ func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 
 	}
 
-	book , _ := NewBook.GetBookById(bookId,server.DB)
+	book , _ := NewBook.GetBookById(bookId,db)
 
 	// if updateBook.Name != "" {
 	// 	book.Name = updateBook.Name
@@ -118,11 +124,10 @@ func(server *Server) UpdateBook(w http.ResponseWriter, r *http.Request){
 
 
 
-	server.DB.Save(&book)
+	db.Save(&book)
 	res, _ :=json.Marshal(book)
 
 	w.Header().Set("Content-Type", "pkglication/json")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(res)
-
 }

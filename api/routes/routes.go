@@ -24,6 +24,7 @@ func InitializeRoutes(s *mux.Router) {
 	v1 := s.PathPrefix("/api/v1").Subrouter()
 	v1.HandleFunc("/book/", controllers.GetBooks)
 	v1.HandleFunc("/book/{bookId}", controllers.GetBookById).Methods(http.MethodGet,  http.MethodOptions)
+	v1.HandleFunc("/book/{bookId}", controllers.DeleteBook).Methods(http.MethodDelete,  http.MethodOptions)
 
 	// v1.HandleFunc("/book/", controllers.CreateBook)
 	

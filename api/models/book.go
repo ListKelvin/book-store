@@ -98,10 +98,10 @@ func(b *Book) GetBookById(Id string, db *gorm.DB ) (*Book, error) {
 }
 
 
-func(b *Book) DeleteBook(ID int64, db *gorm.DB ) (*Book, error) {
+func(b *Book) DeleteBook(ID string, db *gorm.DB ) (*Book, error) {
 
 
-	result:= db.Where("ID=?", ID).Delete(&b)
+	result:= db.Where("isbn=?", ID).Delete(&b)
 	if result.Error != nil{
 		return nil, result.Error
 	}
