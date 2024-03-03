@@ -13,25 +13,11 @@ import (
 
 var NewBook models.Book 
 
-func GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks, err := models.GetAllBooks(db)
-	if err != nil {
-		fmt.Println("Error while converting")
+func GetAuthors(w http.ResponseWriter, r *http.Request){
 
-	}
-	response := models.Response{
-    Data: newBooks,  // Populate data based on request processing
-    Message: "Success", // Or set an appropriate message
-    Status:  "OK",
-  }
-
-	res, _ :=json.Marshal(response)
-	w.Header().Set("Content-Type", "pkglication/json")
-	w.WriteHeader(http.StatusAccepted)
-	w.Write(res)
 }
 
-func GetBookById(w http.ResponseWriter, r *http.Request){
+func GetAuthorById(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	bookId, err := vars["bookId"]
 	// ID, err := strconv.ParseInt(bookId, 0 ,0)
@@ -55,7 +41,7 @@ func GetBookById(w http.ResponseWriter, r *http.Request){
 	w.Write(res)
 
 }
-func  CreateBook(w http.ResponseWriter, r *http.Request){
+func  CreateAuthor(w http.ResponseWriter, r *http.Request){
 	CreateBook := &models.Book{}
 	utils.ParseBody(r, CreateBook)
 	b,_:= CreateBook.CreateBook(db)
@@ -72,7 +58,7 @@ func  CreateBook(w http.ResponseWriter, r *http.Request){
 
 }
 
-func DeleteBook(w http.ResponseWriter, r *http.Request){
+func DeleteAuthor(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	bookId := vars["bookId"]
 	// ID, err := strconv.ParseInt(bookId, 0 ,0)
