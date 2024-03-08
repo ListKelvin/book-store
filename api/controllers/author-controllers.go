@@ -11,7 +11,7 @@ import (
 )
 
 
-var NewBook models.Book 
+
 
 func GetAuthors(w http.ResponseWriter, r *http.Request){
 
@@ -84,7 +84,7 @@ func DeleteAuthor(w http.ResponseWriter, r *http.Request){
 }
 
 // need to fix
-func UpdateBook(w http.ResponseWriter, r *http.Request){
+func UpdateAuthor(w http.ResponseWriter, r *http.Request){
 	updateBook := &models.Book{}
 	utils.ParseBody(r, updateBook)
 	vars := mux.Vars(r)

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/ListKelvin/book-store/api/models"
+	"github.com/ListKelvin/book-store/api/services"
 	"github.com/ListKelvin/book-store/api/utils"
 	"github.com/gorilla/mux"
 )
@@ -14,13 +15,22 @@ import (
 var NewBook models.Book 
 
 func GetBooks(w http.ResponseWriter, r *http.Request){
-	newBooks, err := models.GetAllBooks(db)
-	if err != nil {
+	// newBooks, err := models.GetAllBooks(db)
+		var r2 models.BookRepository
+	// if err != nil {
+	// 	fmt.Println("Error while converting")
+
+	// }
+	bookService := services.NewBookService(r2)
+
+	allBook, errs := bookService.GetAll(db)
+	if errs != nil {
 		fmt.Println("Error while converting")
 
 	}
+
 	response := models.Response{
-    Data: newBooks,  // Populate data based on request processing
+    Data: allBook,  // Populate data based on request processing
     Message: "Success", // Or set an appropriate message
     Status:  "OK",
   }
